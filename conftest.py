@@ -24,8 +24,43 @@ class TSFilesReader(object):
         return len(self.ts_files_list)
 
 
+class TSTestsResults(object):
+    def __init__(self):
+        self.__succeed_tests = list()
+        self.__failed_tests = list()
+
+    @property
+    def succeed_tests(self):
+        return self.__succeed_tests
+
+    @property
+    def faield_tests(self):
+        return self.__failed_tests
+
+    def add_succeed(self, test_file):
+        self.__succeed_tests.append(test_file)
+        return self
+
+    def add_failed(self, test_file):
+        self.__failed_tests.append(test_file)
+        return self
+
+    def count_of_succeed_tests(self):
+        return len(self.__succeed_tests)
+
+    def count_of_failed_tests(self):
+        return len(self.__failed_tests)
+
+
 @pytest.yield_fixture(scope="session", params=['test-suite'])
-def ts_file_reader(request):
+def ts_reader(request):
     """Read files absolute paths into a list from test-suite directory"""
     logger.info("Getting list of paths of the test suite files")
     yield TSFilesReader(request.param)
+
+# probably, it is not the best name in the world for that kind of function
+@pytest.yield_fixture(scope="session")
+def ts_results():
+    """Initializing TS test results store"""
+    logger.info("Initializing TS test results store")
+    yield TSTestsResults()

@@ -8,21 +8,19 @@ logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.DEBUG)
 
 
-def test_rb_parser(ts_file_reader):
+def test_rb_parser(ts_reader, ts_results):
     """Check parsing by RedBaron agains files in test-sute"""
-    succeed_files = []
-    failed_files = []
 
-    for f_path in ts_file_reader.get_file_item():
+    for f_path in ts_reader.get_file_item():
         try:
             with open(f_path, mode="r") as fh:
                 RedBaron(fh.read())
             logger.info("Processing : {0} - OK".format(f_path))
-            succeed_files.append(f_path)
-        except:
-            logger.info("Processing : {0} - FAILED".format(f_path))
-            failed_files.append(f_path)
+            ts_results.add_succeed(f_path)
+        except Exception as e:
+            logger.info("Processing : {0} - FAILED - {1}".format(f_path, e.message))
+            ts_results.add_failed(f_path)
 
-    logger.info("Total count of the files: {0}".format(ts_file_reader.get_len_of_list()))
-    logger.info("Succeed count of files: {0}".format(len(succeed_files)))
-    logger.info("Failed count of files: {0}".format(len(failed_files)))
+    logger.info("Total count of the files: {0}".format(ts_reader.get_len_of_list()))
+    logger.info("Succeed count of files: {0}".format(ts_results.count_of_succeed_tests()))
+    logger.info("Failed count of files: {0}".format(ts_results.count_of_failed_tests()))
