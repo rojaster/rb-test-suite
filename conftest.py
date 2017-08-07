@@ -59,7 +59,7 @@ def ts_reader(request):
     yield TSFilesReader(request.param)
 
 # probably, it is not the best name in the world for that kind of function
-@pytest.yield_fixture(scope="session")
+@pytest.yield_fixture(scope="function")
 def ts_results():
     """Initializing TS test results store"""
     logger.info("Initializing TS test results store")
