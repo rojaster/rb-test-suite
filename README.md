@@ -9,10 +9,15 @@ Tests for Python2.7 are being kept in `2.7` branch.
 
 Current results of running RedBaron over `test-suite`:
 
-* Total count of the files: ***486***
+* Total count of the files: ***484***
 * Succeed count of files: ***417***
-* Failed count of files: ***69***
+* Failed count of files: ***67***
 
+Current results of running Baron over `test-suite`:
+
+* Total count of the files: ***484***
+* Succeed count of files: ***418***
+* Failed count of files: ***66***
 
 ### Run tests from the command line
 ```bash
